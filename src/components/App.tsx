@@ -7,6 +7,7 @@ import { Switch, BrowserRouter as Router, Route, Redirect } from "react-router-d
 import { Login } from "./screens/Login/Login";
 import PrivateRoute from "./atoms/PrivateRoute/PrivateRoute";
 import { Signup } from "./screens/Signup/Signup";
+import { Home } from "./screens/Home/Home";
 
 
 const theme = createTheme({
@@ -43,7 +44,7 @@ export const App = () => {
                     </Route>
 
                     <PrivateRoute path="/Home">
-                        <h1>Home</h1>
+                        <Home />
                     </PrivateRoute>
 
 

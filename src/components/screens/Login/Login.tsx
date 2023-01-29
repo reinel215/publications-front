@@ -22,7 +22,6 @@ export const Login = () => {
 
     return (
         <div>
-            <h4>Inicio de sesión</h4>
 
             <form onSubmit={handleSubmit(onLogin)}>
                 <Input

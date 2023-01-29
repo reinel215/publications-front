@@ -21,7 +21,6 @@ export const Signup = () => {
 
     return (
         <div>
-            <h4>Registro</h4>
 
             <form onSubmit={handleSubmit(onLogin)}>
                 <Input
