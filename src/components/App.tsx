@@ -6,6 +6,7 @@ import { Colors } from "../constants/Colors";
 import { Switch, BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { Login } from "./screens/Login/Login";
 import PrivateRoute from "./atoms/PrivateRoute/PrivateRoute";
+import { Signup } from "./screens/Signup/Signup";
 
 
 const theme = createTheme({
@@ -38,7 +39,7 @@ export const App = () => {
                     </Route>
 
                     <Route exact path="/signup">
-                        <h1>SIGNUP</h1>
+                        <Signup />
                     </Route>
 
                     <PrivateRoute path="/Home">
