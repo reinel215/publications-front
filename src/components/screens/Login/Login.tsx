@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../../services/userService/login';
 import { Input } from '../../atoms/Input/Input';
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Button, Link, Paper, Typography } from '@mui/material';
+import { isJSDocUnknownTag } from 'typescript';
 
 
 export const Login = () => {
@@ -21,20 +23,52 @@ export const Login = () => {
     }
 
     return (
-        <div>
 
-            <form onSubmit={handleSubmit(onLogin)}>
-                <Input
-                    label='Username'
-                    name='username'
-                    control={control}
-                />
-                <button type="submit">Iniciar</button>
-                <Link to="/signup">
-                    Registrarse
-                </Link>
-            </form>
 
-        </div>
+        <Box alignItems="center" justifyContent="center" display="flex" flexDirection="column" gap="16px" sx={{ height: "100%" }} >
+
+            <Paper variant="outlined" style={{ maxWidth: 400, padding: 12, width: "50%" }} >
+
+
+                <Typography variant="h6" sx={{ marginBottom: "12px" }} textAlign="center">
+                    Iniciar Sesión
+                </Typography>
+
+
+                <form onSubmit={handleSubmit(onLogin)} style={{  }}>
+
+                    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column", justifyContent: "space-around"}}>
+
+                        <Box sx={{display: "flex", flexDirection: "column", gap: "5px"}}>
+                            <Input
+                                control={control}
+                                name="username"
+                                label='Nombre de usuario'
+                            />
+
+                            <Box sx={{ display: "flex", justifyContent: "end" }}>
+                                <RouterLink to="/signup" style={{ textDecoration: 'none' }}>
+                                    <Link sx={{ textDecoration: "none", fontWeight: "bold" }} component="div">
+                                        Registrarse
+                                    </Link>
+                                </RouterLink>
+                            </Box>
+                        </Box>
+
+
+                        <Button variant="text" type="submit">
+                            Iniciar
+                        </Button>
+
+                    </Box>
+
+
+
+                </form>
+
+
+            </Paper>
+
+        </Box>
     )
 }

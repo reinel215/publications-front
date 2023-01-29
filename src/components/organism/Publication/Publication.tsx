@@ -10,8 +10,8 @@ interface PublicationProps {
 
 export const Publication = ({ post }: PublicationProps) => {
     return (
-        <Paper variant="outlined" style={{ maxWidth: 400, padding: 12, width: "40%" }} >
-            <Box alignItems="center" flexDirection="row" display="flex" gap="5px">
+        <Paper variant="outlined" style={{ maxWidth: 400, width: "40%" }} >
+            <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
                 <Avatar alt="avatar" src={post.author.avatar} />
                 <Typography variant="subtitle2" fontWeight="bold">
                     {`${post.author.name} ${post.author.surname}`}
@@ -27,10 +27,17 @@ export const Publication = ({ post }: PublicationProps) => {
             </Box>
 
 
-            <Box alignItems="center" flexDirection="row" display="flex" sx={{ marginTop: "10px", marginBottom: "10px" }}>
+            <Box alignItems="center" flexDirection="column" display="flex" sx={{ marginTop: "10px", marginBottom: "10px" }}>
 
+                {
+                    post.image ?
+                        <Box sx={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px" }}>
+                            <img src={post.image} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
+                        </Box>
+                        : null
+                }
 
-                <Typography variant="body2">
+                <Typography variant="body2" sx={{margin: "0px 12px"}}>
                     {`${post.message}`}
                 </Typography>
 
@@ -38,7 +45,7 @@ export const Publication = ({ post }: PublicationProps) => {
 
             {
                 post.likes.length ?
-                    <Box alignItems="center" flexDirection="row" display="flex" gap="2px">
+                    <Box alignItems="center" flexDirection="row" display="flex" gap="2px" padding="12px">
 
                         <Avatar alt="avatar" src={post.likes[0].avatar} sx={{ width: 24, height: 24 }} />
                         <Typography variant="subtitle2" fontWeight="bold">

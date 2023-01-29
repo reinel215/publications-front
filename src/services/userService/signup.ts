@@ -7,16 +7,18 @@ export interface SingupParams {
     username: string;
     surname: string;
     name: string;
+    avatar:string;
 }
 
-export const signup = async ({ username, surname, name }: SingupParams) => {
+export const signup = async ({ username, surname, name, avatar }: SingupParams) => {
 
     try {
         const response = (await axiosClient.post("/users/register", {
-            username: username,
-            surname: surname,
-            name: name,
-            role: "user"
+            username,
+            surname,
+            name,
+            role: "user",
+            avatar,
         }
         )).data;
 
