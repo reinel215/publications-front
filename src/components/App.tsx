@@ -8,6 +8,9 @@ import { Login } from "./screens/Login/Login";
 import PrivateRoute from "./atoms/PrivateRoute/PrivateRoute";
 import { Signup } from "./screens/Signup/Signup";
 import { Home } from "./screens/Home/Home";
+import { Header } from "./organism/Header/Header";
+import { useUserDataStore } from "../store/user/userDataStore";
+import { CreatePublication } from "./screens/CreatePublication/CreatePublication";
 
 
 const theme = createTheme({
@@ -30,9 +33,13 @@ const theme = createTheme({
 });
 
 export const App = () => {
+
+    const isAuth = useUserDataStore(state => state.isAuth);
+
     return (
         <ThemeProvider theme={theme}>
             <Router>
+                {isAuth ? <Header /> : null}
                 <Switch>
 
                     <Route exact path="/sigin">
@@ -45,6 +52,10 @@ export const App = () => {
 
                     <PrivateRoute path="/Home">
                         <Home />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/create-publication">
+                        <CreatePublication />
                     </PrivateRoute>
 
 

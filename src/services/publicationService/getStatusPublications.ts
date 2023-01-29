@@ -1,5 +1,5 @@
 import { getAxiosClient } from "../../helper/AxiosHelper";
-import { Post, PostStatus } from "../../types/Post";
+import { Post, PostDb, PostStatus } from "../../types/Post";
 
 const axiosClient = getAxiosClient();
 
@@ -8,7 +8,7 @@ interface PublicationsFilterParam {
 }
 
 
-export const getStatusPublications = async (filter: PublicationsFilterParam): Promise<Post[]> => {
+export const getStatusPublications = async (filter: PublicationsFilterParam): Promise<PostDb[]> => {
     try {
         const response = (await axiosClient.get("/publications/", {
             params: {

@@ -8,10 +8,12 @@ interface InputProps {
     name: string;
     control: Control<any, any>;
     rules?: Object;
+    rows?: number;
+    multiline?: boolean;
 }
 
 
-export const Input = ({ label, name, control, rules }: InputProps) => {
+export const Input = ({ label, name, control, rules, rows, multiline }: InputProps) => {
     return (
         <Controller
             control={control}
@@ -22,6 +24,8 @@ export const Input = ({ label, name, control, rules }: InputProps) => {
                         label={label}
                         size="small"
                         onChange={field.onChange}
+                        rows={rows}
+                        multiline={multiline}
                     />
                 )
             }}

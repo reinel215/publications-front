@@ -9,6 +9,8 @@ export interface Post {
     status: PostStatus;
 }
 
+export type CreatePostRequest = Omit<Post, "likes" | "author" | "create_at" >
+
 export const enum PostStatus {
     DRAFTED = "drafted",
     DELTED = "deleted",

@@ -10,7 +10,7 @@ interface PublicationProps {
 
 export const Publication = ({ post }: PublicationProps) => {
     return (
-        <Paper variant="outlined" style={{ maxWidth: 400, padding: 12 }} >
+        <Paper variant="outlined" style={{ maxWidth: 400, padding: 12, width: "40%" }} >
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px">
                 <Avatar alt="avatar" src={post.author.avatar} />
                 <Typography variant="subtitle2" fontWeight="bold">
@@ -36,26 +36,32 @@ export const Publication = ({ post }: PublicationProps) => {
 
             </Box>
 
+            {
+                post.likes.length ?
+                    <Box alignItems="center" flexDirection="row" display="flex" gap="2px">
 
-            <Box alignItems="center" flexDirection="row" display="flex">
-                <Avatar alt="avatar" src={post.likes[0].avatar} sx={{ width: 24, height: 24 }} />
-                <Typography variant="subtitle2" fontWeight="bold">
-                    Le gusta a
-                </Typography>
+                        <Avatar alt="avatar" src={post.likes[0].avatar} sx={{ width: 24, height: 24 }} />
+                        <Typography variant="subtitle2" fontWeight="bold">
+                            Le gusta a
+                        </Typography>
 
-                <Link href="#" variant="body2">
-                    {`@${post.likes[0].username}`}
-                </Link>
+                        <Link href="#" variant="body2">
+                            {` @${post.likes[0].username} `}
+                        </Link>
 
-                <Typography variant="subtitle2" fontWeight="bold">
-                    y
-                </Typography>
+                        <Typography variant="subtitle2" fontWeight="bold">
+                            y
+                        </Typography>
 
-                <Link variant="body2">
-                    {post.likes.length - 1} mas
-                </Link>
+                        <Typography variant="body2">
+                            {post.likes.length - 1} mas
+                        </Typography>
 
-            </Box>
+                    </Box>
+
+                    : null
+            }
+
         </Paper>
     )
 }
