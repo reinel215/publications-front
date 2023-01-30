@@ -1,8 +1,12 @@
-import { Avatar, Box, Button, Link, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Button, IconButton, Link, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getStatusPublications } from '../../../services/publicationService/getStatusPublications';
 import { Post, PostStatus } from '../../../types/Post';
-
+import { PublicationLikes } from '../../molecules/PublicationsLikes/PublicationLikes';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { Like } from '../../atoms/Like/Like';
+import { useUserDataStore } from '../../../store/user/userDataStore';
 
 interface PublicationProps {
     post: Post,
@@ -14,6 +18,9 @@ interface PublicationProps {
 }
 
 export const Publication = ({ post, paperStyle, delatable, onDelete, publishable, onPublish }: PublicationProps) => {
+
+    const user = useUserDataStore(state => state.user);
+
     return (
         <Paper variant="outlined" style={paperStyle} >
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
@@ -32,13 +39,26 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
             </Box>
 
 
-            <Box alignItems="center" flexDirection="column" display="flex" sx={{ marginTop: "10px", marginBottom: "10px" }}>
+            <Box alignItems="start" flexDirection="column" display="flex" sx={{ marginTop: "10px", marginBottom: "10px", justifyContent: "start" }}>
 
                 {
                     post.image ?
                         <Box sx={{ width: "100%", height: "200px", objectFit: "cover", marginBottom: "10px" }}>
                             <img src={post.image} style={{ width: "100%", height: "200px", objectFit: "cover" }} />
                         </Box>
+                        : null
+                }
+
+                {
+                    post.image ?
+                        <Like isActive={!!post.likes.find(post => post.user_id === user.user_id)} />
+                        :
+                        null
+                }
+
+                {
+                    post.likes.length && post.image ?
+                        <PublicationLikes post={post} />
                         : null
                 }
 
@@ -49,27 +69,12 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
             </Box>
 
             {
-                post.likes.length ?
-                    <Box alignItems="center" flexDirection="row" display="flex" gap="2px" padding="12px">
+                post.likes.length && !post.image ?
+                    <>
+                        <Like isActive={!!post.likes.find(post => post.user_id === user.user_id)} style={{margin: "0px 5px"}} />
 
-                        <Avatar alt="avatar" src={post.likes[0].avatar} sx={{ width: 24, height: 24 }} />
-                        <Typography variant="subtitle2" fontWeight="bold">
-                            Le gusta a
-                        </Typography>
-
-                        <Link href="#" variant="body2">
-                            {` @${post.likes[0].username} `}
-                        </Link>
-
-                        <Typography variant="subtitle2" fontWeight="bold">
-                            y
-                        </Typography>
-
-                        <Typography variant="body2">
-                            {post.likes.length - 1} mas
-                        </Typography>
-
-                    </Box>
+                        <PublicationLikes post={post} />
+                    </>
 
                     : null
             }
