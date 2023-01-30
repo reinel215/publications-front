@@ -1,20 +1,16 @@
-import { Avatar, Box, Divider, Paper, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Avatar, Box, CircularProgress, Divider, Paper, Typography } from '@mui/material';
+import React from 'react';
 import { usePublications } from '../../../hooks/usePublications';
-import { getStatusPublications } from '../../../services/publicationService/getStatusPublications';
-import { updatePublication } from '../../../services/publicationService/updatePublication';
 import { useUserDataStore } from '../../../store/user/userDataStore';
-import { Post, PostDb, PostStatus } from '../../../types/Post';
+import { PostStatus } from '../../../types/Post';
 import { Publication } from '../../organism/Publication/Publication';
 
 
 
 export const Profile = () => {
 
-    const history = useHistory();
     const user = useUserDataStore(state => state.user);
-    const { publications, onDelete, like, unLike } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED], user_id: user.user_id.toString() } })
+    const { publications, onDelete, like, unLike, loading } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED], user_id: user.user_id.toString() } })
 
 
 
@@ -65,18 +61,22 @@ export const Profile = () => {
 
 
             <Box alignItems="center" justifyContent="start" display="flex" flexDirection="column" gap="16px" sx={{ height: "100%", marginTop: "20px" }} >
-
                 {
-                    publications.map(post => <Publication
-                        key={post.post_id}
-                        post={post}
-                        paperStyle={{ maxWidth: 400, width: "100%" }}
-                        delatable
-                        onDelete={onDelete}
-                        onClickLike={() => like(post)}
-                        onClickUnlike={() => unLike(post)}
-                    />)
+                    loading ?
+                        <CircularProgress />
+                        :
+                        publications.map(post => <Publication
+                            key={post.post_id}
+                            post={post}
+                            paperStyle={{ maxWidth: 400, width: "100%" }}
+                            delatable
+                            onDelete={onDelete}
+                            onClickLike={() => like(post)}
+                            onClickUnlike={() => unLike(post)}
+                        />)
+
                 }
+
             </Box>
 
         </Box>

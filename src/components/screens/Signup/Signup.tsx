@@ -1,22 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { signup, SingupParams } from '../../../services/userService/signup';
 import { Input } from '../../atoms/Input/Input';
-import { Box, Button, Link, Paper, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Link, Paper, Typography } from '@mui/material';
 import validationRegister from '../../../helper/validationRegister';
 
 export const Signup = () => {
 
+    const [loading, setLoading] = useState<Boolean>(false);
     const { handleSubmit, control, formState } = useForm();
     const history = useHistory();
 
     const onSignup = async (user: SingupParams) => {
         try {
+            setLoading(true);
             await signup(user);
             history.push("/sigin");
         } catch (error) {
             console.error("Error", error);
+        }finally {
+            setLoading(false);
         }
     }
 
@@ -43,7 +47,7 @@ export const Signup = () => {
                             label='Nombre de usuario'
                             name='username'
                             control={control}
-                            rules={{ ...validationRegister({ required: true, maxLength: 50}) }}
+                            rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.username}
                             helperText={formState.errors?.username?.message.toString()}
                         />
@@ -52,7 +56,7 @@ export const Signup = () => {
                             label='Nombre'
                             name='name'
                             control={control}
-                            rules={{ ...validationRegister({ required: true, maxLength: 50}) }}
+                            rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.name}
                             helperText={formState.errors?.name?.message.toString()}
                         />
@@ -61,7 +65,7 @@ export const Signup = () => {
                             label='Apellido'
                             name='surname'
                             control={control}
-                            rules={{ ...validationRegister({ required: true, maxLength: 50}) }}
+                            rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.surname}
                             helperText={formState.errors?.surname?.message.toString()}
                         />
@@ -70,13 +74,15 @@ export const Signup = () => {
                             label='Avatar'
                             name='avatar'
                             control={control}
-                            rules={{ ...validationRegister({ required: true}) }}
-                            error={!!formState.errors.avatar}
-                            helperText={formState.errors?.avatar?.message.toString()}
                         />
 
                         <Button variant="text" type="submit">
-                            Registrarse
+                            {
+                                loading ?
+                                    <CircularProgress />
+                                    :
+                                    "Registrarse"
+                            }
                         </Button>
 
                         <Button variant="text" color="secondary" onClick={() => history.goBack()}>

@@ -9,13 +9,17 @@ import { deleteLike } from '../services/publicationService/deleteLike';
 export const usePublications = ({ filter }: { filter: PublicationsFilterParam }) => {
 
     const [publications, setPublications] = useState<PostDb[]>([]);
+    const [loading, setLoading] = useState<Boolean>(false);
 
     const getPublications = async () => {
         try {
+            setLoading(true);
             const publications = await getStatusPublications(filter);
             setPublications(publications);
         } catch (error) {
             console.error("Error", error);
+        }finally {
+            setLoading(false);
         }
     }
 
@@ -27,20 +31,28 @@ export const usePublications = ({ filter }: { filter: PublicationsFilterParam })
 
     const onDelete = async (post: PostDb) => {
         try {
+            setLoading(true);
+
             await updatePublication({ message: post.message, status: PostStatus.DELTED, post_id: post.post_id.toString() });
             await getPublications();
         } catch (error) {
             console.error(error);
+        }finally {
+            setLoading(false);
         }
     }
 
 
     const onPublish = async (post: PostDb) => {
         try {
+            setLoading(true);
+
             await updatePublication({ message: post.message, status: PostStatus.PUBLISHED, post_id: post.post_id.toString() });
             await getPublications();
         } catch (error) {
             console.error(error);
+        }finally {
+            setLoading(false);
         }
     }
 
@@ -69,6 +81,7 @@ export const usePublications = ({ filter }: { filter: PublicationsFilterParam })
         onDelete,
         onPublish,
         like,
-        unLike
+        unLike,
+        loading
     }
 }

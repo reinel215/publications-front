@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../../services/userService/login';
 import { Input } from '../../atoms/Input/Input';
 import { Link as RouterLink } from "react-router-dom";
-import { Box, Button, Link, Paper, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Link, Paper, Typography } from '@mui/material';
 import validationRegister from '../../../helper/validationRegister';
 
 
@@ -12,13 +12,18 @@ export const Login = () => {
 
     const { handleSubmit, control, formState } = useForm();
     const history = useHistory();
+    const [loading, setLoading] = useState<Boolean>(false);
+
 
     const onLogin = async ({ username }: { username: string }) => {
         try {
+            setLoading(true);
             const result = await login({ username });
             history.push("/home");
         } catch (error) {
             console.error("Error", error);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -44,7 +49,7 @@ export const Login = () => {
                                 control={control}
                                 name="username"
                                 label='Nombre de usuario'
-                                rules={{ ...validationRegister({ required: true, maxLength: 50}) }}
+                                rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                                 error={!!formState.errors.username}
                                 helperText={formState.errors?.username?.message.toString()}
                             />
@@ -60,7 +65,12 @@ export const Login = () => {
 
 
                         <Button variant="text" type="submit">
-                            Iniciar
+                            {
+                                loading ?
+                                    <CircularProgress />
+                                    :
+                                    "Iniciar"
+                            }
                         </Button>
 
                     </Box>
