@@ -1,16 +1,19 @@
-import { Avatar, Box, Link, Paper, Typography } from '@mui/material';
+import { Avatar, Box, Button, Link, Paper, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { getStatusPublications } from '../../../services/publicationService/getStatusPublications';
 import { Post, PostStatus } from '../../../types/Post';
 
 
 interface PublicationProps {
-    post: Post
+    post: Post,
+    paperStyle?: React.CSSProperties;
+    delatable?: boolean;
+    onDelete?: (post : Post) => void;
 }
 
-export const Publication = ({ post }: PublicationProps) => {
+export const Publication = ({ post, paperStyle, delatable, onDelete }: PublicationProps) => {
     return (
-        <Paper variant="outlined" style={{ maxWidth: 400, width: "40%" }} >
+        <Paper variant="outlined" style={paperStyle} >
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
                 <Avatar alt="avatar" src={post.author.avatar} />
                 <Typography variant="subtitle2" fontWeight="bold">
@@ -37,7 +40,7 @@ export const Publication = ({ post }: PublicationProps) => {
                         : null
                 }
 
-                <Typography variant="body2" sx={{margin: "0px 12px"}}>
+                <Typography variant="body2" sx={{ margin: "0px 12px" }}>
                     {`${post.message}`}
                 </Typography>
 
@@ -68,6 +71,17 @@ export const Publication = ({ post }: PublicationProps) => {
 
                     : null
             }
+
+            {
+                delatable ?
+                    <Button variant="text" onClick={() => onDelete(post)} color="secondary" disabled={ post.status === PostStatus.DELTED }>
+                        Borrar
+                    </Button>
+                    :
+                    null
+
+            }
+
 
         </Paper>
     )

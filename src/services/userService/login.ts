@@ -21,6 +21,7 @@ export const login = async ({ username }: LoginParams) => {
         )).data;
 
         useUserDataStore.getState().setIsAuth(true);
+        useUserDataStore.getState().setUser(response.user);
         
         return response
     } catch (error) {

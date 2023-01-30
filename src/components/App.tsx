@@ -11,6 +11,7 @@ import { Home } from "./screens/Home/Home";
 import { Header } from "./organism/Header/Header";
 import { useUserDataStore } from "../store/user/userDataStore";
 import { CreatePublication } from "./screens/CreatePublication/CreatePublication";
+import { Profile } from "./screens/Profile/Profile";
 
 
 const theme = createTheme({
@@ -52,6 +53,10 @@ export const App = () => {
 
                     <PrivateRoute path="/Home">
                         <Home />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/profile">
+                        <Profile />
                     </PrivateRoute>
 
                     <PrivateRoute path="/create-publication">

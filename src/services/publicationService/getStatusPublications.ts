@@ -3,8 +3,9 @@ import { Post, PostDb, PostStatus } from "../../types/Post";
 
 const axiosClient = getAxiosClient();
 
-interface PublicationsFilterParam {
+export interface PublicationsFilterParam {
     status: PostStatus[];
+    user_id?: string;
 }
 
 
@@ -12,7 +13,8 @@ export const getStatusPublications = async (filter: PublicationsFilterParam): Pr
     try {
         const response = (await axiosClient.get("/publications/", {
             params: {
-                status: filter.status.join(",")
+                status: filter.status.join(","),
+                user_id: filter.user_id
             },
             withCredentials: true
         })).data;

@@ -31,7 +31,7 @@ export interface RemovePost {
 export interface UpdatePost {
     message: string;
     status: PostStatus;
-    author: string;
+    author?: string;
     post_id: string;
 }
 

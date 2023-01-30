@@ -1,28 +1,14 @@
-import { Avatar, Box, Paper, Typography, Button } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { Box, Button } from '@mui/material';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { getStatusPublications } from '../../../services/publicationService/getStatusPublications';
-import { Post, PostDb, PostStatus } from '../../../types/Post';
+import { usePublications } from '../../../hooks/usePublications';
+import { PostStatus } from '../../../types/Post';
 import { Publication } from '../../organism/Publication/Publication';
 
 export const Home = () => {
 
-    const [publications, setPublications] = useState<PostDb[]>([]);
     const history = useHistory();
-
-    const getPublications = async () => {
-        try {
-            const publications = await getStatusPublications({ status: [PostStatus.PUBLISHED] });
-            setPublications(publications);
-        } catch (error) {
-            console.error("Error", error);
-        }
-    }
-
-
-    useEffect(() => {
-        getPublications();
-    }, [])
+    const { publications } = usePublications({ filter: { status: [PostStatus.PUBLISHED] } })
 
 
     return (
@@ -34,7 +20,7 @@ export const Home = () => {
 
 
             {
-                publications.map(post => <Publication key={post.post_id} post={post} />)
+                publications.map(post => <Publication key={post.post_id} post={post} paperStyle={{ maxWidth: 400, width: "40%" }} />)
             }
         </Box>
     )
