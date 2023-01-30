@@ -8,10 +8,12 @@ interface PublicationProps {
     post: Post,
     paperStyle?: React.CSSProperties;
     delatable?: boolean;
-    onDelete?: (post : Post) => void;
+    onDelete?: (post: Post) => void;
+    publishable?: boolean;
+    onPublish?: (post: Post) => void;
 }
 
-export const Publication = ({ post, paperStyle, delatable, onDelete }: PublicationProps) => {
+export const Publication = ({ post, paperStyle, delatable, onDelete, publishable, onPublish }: PublicationProps) => {
     return (
         <Paper variant="outlined" style={paperStyle} >
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
@@ -74,8 +76,19 @@ export const Publication = ({ post, paperStyle, delatable, onDelete }: Publicati
 
             {
                 delatable ?
-                    <Button variant="text" onClick={() => onDelete(post)} color="secondary" disabled={ post.status === PostStatus.DELTED }>
+                    <Button variant="text" onClick={() => onDelete(post)} color="secondary" disabled={post.status === PostStatus.DELTED}>
                         Borrar
+                    </Button>
+                    :
+                    null
+
+            }
+
+
+            {
+                publishable ?
+                    <Button variant="text" onClick={() => onPublish(post)} disabled={post.status === PostStatus.PUBLISHED}>
+                        Publicar
                     </Button>
                     :
                     null

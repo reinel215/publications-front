@@ -12,6 +12,8 @@ import { Header } from "./organism/Header/Header";
 import { useUserDataStore } from "../store/user/userDataStore";
 import { CreatePublication } from "./screens/CreatePublication/CreatePublication";
 import { Profile } from "./screens/Profile/Profile";
+import { Roles } from "../types/User";
+import { Administration } from "./screens/Administration/Administration";
 
 
 const theme = createTheme({
@@ -53,6 +55,10 @@ export const App = () => {
 
                     <PrivateRoute path="/Home">
                         <Home />
+                    </PrivateRoute>
+
+                    <PrivateRoute path="/administration" allowedRole={Roles.ADMIN}>
+                        <Administration />
                     </PrivateRoute>
 
                     <PrivateRoute path="/profile">

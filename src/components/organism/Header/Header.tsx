@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Tabs } from '@mui/material';
 import { LinkTab } from '../../atoms/LinkTab/LinkTab';
+import { useUserDataStore } from '../../../store/user/userDataStore';
+import { Roles } from '../../../types/User';
 
 
 
@@ -9,6 +11,7 @@ import { LinkTab } from '../../atoms/LinkTab/LinkTab';
 
 export const Header = () => {
     const [value, setValue] = React.useState(0);
+    const user = useUserDataStore(state => state.user);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
@@ -20,6 +23,12 @@ export const Header = () => {
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <LinkTab label="Home" href="/home" />
                     <LinkTab label="Perfil" href='/profile' />
+                    {
+                        user.role === Roles.ADMIN ? 
+                        <LinkTab label="Admin" href='/administration' />
+                        :
+                        null
+                    }
                 </Tabs>
             </Box>
         </Box>

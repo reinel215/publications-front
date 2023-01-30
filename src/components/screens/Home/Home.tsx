@@ -1,22 +1,37 @@
-import { Box, Button } from '@mui/material';
-import React from 'react';
+import { Box, Button, ButtonGroup } from '@mui/material';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { usePublications } from '../../../hooks/usePublications';
+import { useUserDataStore } from '../../../store/user/userDataStore';
 import { PostStatus } from '../../../types/Post';
+import { Roles } from '../../../types/User';
 import { Publication } from '../../organism/Publication/Publication';
 
 export const Home = () => {
 
     const history = useHistory();
-    const { publications } = usePublications({ filter: { status: [PostStatus.PUBLISHED] } })
-
+    const [sort, setSort] = useState("DESC");
+    const { publications } = usePublications({ filter: { status: [PostStatus.PUBLISHED], sortBy: sort } })
+    const user = useUserDataStore(state => state.user);
 
     return (
         <Box alignItems="center" justifyContent="start" display="flex" flexDirection="column" gap="16px" sx={{ height: "100%", marginTop: "20px" }} >
 
-            <Button variant="text" onClick={() => history.push("/create-publication")}>
-                + Crear publicacion
-            </Button>
+            {
+                user.role === Roles.USER ?
+                    <Button variant="text" onClick={() => history.push("/create-publication")}>
+                        + Crear publicacion
+                    </Button>
+                    :
+                    null
+            }
+
+
+            <ButtonGroup variant="text" aria-label="text button group">
+                <Button onClick={() => setSort("ASC")}>ASC</Button>
+                <Button onClick={() => setSort("DESC")}>DESC</Button>
+            </ButtonGroup>
+
 
 
             {

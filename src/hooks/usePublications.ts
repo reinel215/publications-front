@@ -20,21 +20,32 @@ export const usePublications = ({ filter } : { filter: PublicationsFilterParam }
 
     useEffect(() => {
         getPublications();
-    }, [])
+    }, [filter.sortBy])
 
 
     const onDelete = async (post : PostDb) => {
         try {
             await updatePublication({ message: post.message, status: PostStatus.DELTED, post_id: post.post_id.toString() });
-            getPublications();
+            await getPublications();
         } catch (error) {
             console.error(error);
         }
     }
 
 
+    const onPublish = async (post : PostDb) => {
+        try {
+            await updatePublication({ message: post.message, status: PostStatus.PUBLISHED, post_id: post.post_id.toString() });
+            await getPublications();
+        } catch (error) {
+            console.error(error);
+        }
+    } 
+
+
     return {
         publications,
-        onDelete
+        onDelete,
+        onPublish
     }
 }
