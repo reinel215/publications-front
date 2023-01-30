@@ -14,10 +14,14 @@ export const login = async ({ username }: LoginParams) => {
         const response = (await axiosClient.post("/users/auth/login", {
             username: username,
             password: "any" //passport force me to send the password even if i am not going to use it
+        },
+        {
+            withCredentials: true
         }
         )).data;
 
         useUserDataStore.getState().setIsAuth(true);
+        useUserDataStore.getState().setUser(response.user);
         
         return response
     } catch (error) {
