@@ -10,7 +10,7 @@ import { Publication } from '../../organism/Publication/Publication';
 
 export const Administration = () => {
     const history = useHistory();
-    const { publications, onDelete, onPublish } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED] } })
+    const { publications, onDelete, onPublish, like, unLike } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED] } })
 
 
     return (
@@ -24,6 +24,8 @@ export const Administration = () => {
                     onDelete={onDelete}
                     publishable
                     onPublish={onPublish}
+                    onClickLike={() => like(post)}
+                    onClickUnlike={() => unLike(post)}
                 />
                 )
             }

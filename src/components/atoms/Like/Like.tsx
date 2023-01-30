@@ -6,20 +6,22 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 interface LikeProps {
     isActive: boolean,
-    style?: SxProps
+    style?: SxProps,
+    onClickLike: () => void,
+    onClickUnlike: () => void
 }
 
-export const Like = ({ isActive, style }: LikeProps) => {
+export const Like = ({ isActive, style, onClickLike, onClickUnlike }: LikeProps) => {
     return (
         <Box sx={{ display: "flex", alignItems: "start", width: "100%", ...style }}>
 
             {
                 isActive ?
-                    <IconButton>
+                    <IconButton onClick={onClickUnlike} >
                         <FavoriteIcon color='secondary' fontSize="small" />
                     </IconButton>
                     :
-                    <IconButton>
+                    <IconButton onClick={onClickLike}>
                         <FavoriteBorderIcon fontSize="small" />
                     </IconButton>
             }

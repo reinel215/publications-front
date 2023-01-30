@@ -14,7 +14,7 @@ export const Profile = () => {
 
     const history = useHistory();
     const user = useUserDataStore(state => state.user);
-    const { publications, onDelete } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED], user_id: user.user_id.toString() } })
+    const { publications, onDelete, like, unLike } = usePublications({ filter: { status: [PostStatus.PUBLISHED, PostStatus.DRAFTED, PostStatus.DELTED], user_id: user.user_id.toString() } })
 
 
 
@@ -73,6 +73,8 @@ export const Profile = () => {
                         paperStyle={{ maxWidth: 400, width: "100%" }}
                         delatable
                         onDelete={onDelete}
+                        onClickLike={() => like(post)}
+                        onClickUnlike={() => unLike(post)}
                     />)
                 }
             </Box>

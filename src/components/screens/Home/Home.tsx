@@ -11,7 +11,7 @@ export const Home = () => {
 
     const history = useHistory();
     const [sort, setSort] = useState("DESC");
-    const { publications } = usePublications({ filter: { status: [PostStatus.PUBLISHED], sortBy: sort } })
+    const { publications, like, unLike } = usePublications({ filter: { status: [PostStatus.PUBLISHED], sortBy: sort } })
     const user = useUserDataStore(state => state.user);
 
     return (
@@ -35,7 +35,13 @@ export const Home = () => {
 
 
             {
-                publications.map(post => <Publication key={post.post_id} post={post} paperStyle={{ maxWidth: 400, width: "40%" }} />)
+                publications.map(post => <Publication
+                    key={post.post_id}
+                    post={post}
+                    paperStyle={{ maxWidth: 400, width: "40%" }}
+                    onClickLike={() => like(post)}
+                    onClickUnlike={() => unLike(post)}
+                />)
             }
         </Box>
     )

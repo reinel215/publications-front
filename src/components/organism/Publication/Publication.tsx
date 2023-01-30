@@ -15,9 +15,11 @@ interface PublicationProps {
     onDelete?: (post: Post) => void;
     publishable?: boolean;
     onPublish?: (post: Post) => void;
+    onClickLike: () => void,
+    onClickUnlike: () => void
 }
 
-export const Publication = ({ post, paperStyle, delatable, onDelete, publishable, onPublish }: PublicationProps) => {
+export const Publication = ({ post, paperStyle, delatable, onDelete, publishable, onPublish, onClickLike, onClickUnlike }: PublicationProps) => {
 
     const user = useUserDataStore(state => state.user);
 
@@ -51,7 +53,11 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
 
                 {
                     post.image ?
-                        <Like isActive={!!post.likes.find(post => post.user_id === user.user_id)} />
+                        <Like
+                            isActive={!!post.likes.find(post => post.user_id === user.user_id)}
+                            onClickLike={onClickLike}
+                            onClickUnlike={onClickUnlike}
+                        />
                         :
                         null
                 }
@@ -69,13 +75,21 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
             </Box>
 
             {
+                !post.image ?
+                    <Like
+                        isActive={!!post.likes.find(post => post.user_id === user.user_id)} style={{ margin: "0px 5px" }}
+                        onClickLike={onClickLike}
+                        onClickUnlike={onClickUnlike}
+                    />
+                    :
+                    null
+            }
+
+
+
+            {
                 post.likes.length && !post.image ?
-                    <>
-                        <Like isActive={!!post.likes.find(post => post.user_id === user.user_id)} style={{margin: "0px 5px"}} />
-
-                        <PublicationLikes post={post} />
-                    </>
-
+                    <PublicationLikes post={post} />
                     : null
             }
 
