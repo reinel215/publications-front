@@ -1,12 +1,10 @@
 import { Avatar, Box, Button, IconButton, Link, Paper, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { getStatusPublications } from '../../../services/publicationService/getStatusPublications';
+import React from 'react';
 import { Post, PostStatus } from '../../../types/Post';
 import { PublicationLikes } from '../../molecules/PublicationsLikes/PublicationLikes';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Like } from '../../atoms/Like/Like';
 import { useUserDataStore } from '../../../store/user/userDataStore';
+import { Link as RouterLink } from "react-router-dom";
 
 interface PublicationProps {
     post: Post,
@@ -26,14 +24,25 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
     return (
         <Paper variant="outlined" style={paperStyle} >
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
-                <Avatar alt="avatar" src={post.author.avatar} />
+
+                {
+                    post.author?.avatar ?
+                        <RouterLink to={`/profile/${post.author.user_id}`} style={{ textDecoration: 'none' }}>
+                            <Avatar alt="avatar" src={post.author.avatar} />
+                        </RouterLink>
+                        :
+                        null
+                }
                 <Typography variant="subtitle2" fontWeight="bold">
                     {`${post.author.name} ${post.author.surname}`}
                 </Typography>
 
-                <Link href="#" variant="body2">
-                    {`@${post.author.username}`}
-                </Link>
+
+                <RouterLink to={`/profile/${post.author.user_id}`} style={{ textDecoration: 'none' }}>
+                    <Link sx={{ textDecoration: "none", fontWeight: "bold" }} component="div" variant="body2">
+                        {`@${post.author.username}`}
+                    </Link>
+                </RouterLink>
 
                 <Typography variant="body2">
                     1d

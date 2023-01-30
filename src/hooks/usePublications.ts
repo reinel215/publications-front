@@ -26,7 +26,7 @@ export const usePublications = ({ filter }: { filter: PublicationsFilterParam })
 
     useEffect(() => {
         getPublications();
-    }, [filter.sortBy])
+    }, [filter.sortBy, filter.user_id])
 
 
     const onDelete = async (post: PostDb) => {

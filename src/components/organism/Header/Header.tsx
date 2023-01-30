@@ -22,7 +22,7 @@ export const Header = () => {
             <Box sx={{ borderBottom: 1, borderColor: 'divider', maxWidth: 400, maxHeight: 75, justifyContent: "center", display: "flex", margin: 0 }}>
                 <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                     <LinkTab label="Home" href="/home" />
-                    <LinkTab label="Perfil" href='/profile' />
+                    <LinkTab label="Perfil" href={`/profile/${user.user_id}`} />
                     {
                         user.role === Roles.ADMIN ? 
                         <LinkTab label="Admin" href='/administration' />

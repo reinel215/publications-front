@@ -61,7 +61,7 @@ export const App = () => {
                         <Administration />
                     </PrivateRoute>
 
-                    <PrivateRoute path="/profile">
+                    <PrivateRoute path="/profile/:userId">
                         <Profile />
                     </PrivateRoute>
 
