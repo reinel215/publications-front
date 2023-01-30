@@ -10,7 +10,7 @@ import { Input } from '../../atoms/Input/Input';
 export const CreatePublication = () => {
 
 
-    const { handleSubmit, control, formState } = useForm();
+    const { handleSubmit, control, formState } = useForm<any>();
     const history = useHistory();
 
     const onCreatePublication = async (data: Omit<CreatePostRequest, "status">) => {
@@ -45,7 +45,7 @@ export const CreatePublication = () => {
                             label='URL de la imagen'
                             rules={{ ...validationRegister({ required: true}) }}
                             error={!!formState.errors.image}
-                            helperText={formState.errors?.image?.message.toString()}
+                            helperText={formState.errors?.image?.message?.toString()}
                         />
 
                         <Input
@@ -56,7 +56,7 @@ export const CreatePublication = () => {
                             multiline
                             rules={{ ...validationRegister({ required: true, maxLength: 500}) }}
                             error={!!formState.errors.message}
-                            helperText={formState.errors?.message?.message.toString()}
+                            helperText={formState.errors?.message?.message?.toString()}
                         />
 
 
@@ -66,11 +66,11 @@ export const CreatePublication = () => {
                             label='Lugar'
                             rules={{ ...validationRegister({ required: true, maxLength: 20}) }}
                             error={!!formState.errors.location}
-                            helperText={formState.errors?.location?.message.toString()}
+                            helperText={formState.errors?.location?.message?.toString()}
                         />
 
 
-                        <Button variant="text" type="submit">
+                        <Button variant="text" type="submit" data-testid="create-button">
                             Crear
                         </Button>
 

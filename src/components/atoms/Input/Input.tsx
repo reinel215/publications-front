@@ -30,6 +30,8 @@ export const Input = ({ label, name, control, rules, rows, multiline, error, hel
                         multiline={multiline}
                         error={error}
                         helperText={helperText}
+                        inputProps={{ "data-testid": name }}
+
                     />
                 )
             }}

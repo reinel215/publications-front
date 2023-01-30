@@ -1,18 +1,18 @@
 import { Avatar, Box, Button, IconButton, Link, Paper, Typography } from '@mui/material';
 import React from 'react';
-import { Post, PostStatus } from '../../../types/Post';
+import { Post, PostDb, PostStatus } from '../../../types/Post';
 import { PublicationLikes } from '../../molecules/PublicationsLikes/PublicationLikes';
 import { Like } from '../../atoms/Like/Like';
 import { useUserDataStore } from '../../../store/user/userDataStore';
 import { Link as RouterLink } from "react-router-dom";
 
 interface PublicationProps {
-    post: Post,
+    post: PostDb,
     paperStyle?: React.CSSProperties;
     delatable?: boolean;
-    onDelete?: (post: Post) => void;
+    onDelete?: (post: PostDb) => void;
     publishable?: boolean;
-    onPublish?: (post: Post) => void;
+    onPublish?: (post: PostDb) => void;
     onClickLike: () => void,
     onClickUnlike: () => void
 }
@@ -22,7 +22,7 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
     const user = useUserDataStore(state => state.user);
 
     return (
-        <Paper variant="outlined" style={paperStyle} >
+        <Paper variant="outlined" style={paperStyle} data-testid="publication">
             <Box alignItems="center" flexDirection="row" display="flex" gap="5px" padding="12px">
 
                 {
@@ -63,7 +63,7 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
                 {
                     post.image ?
                         <Like
-                            isActive={!!post.likes.find(post => post.user_id === user.user_id)}
+                            isActive={!!post?.likes?.find(post => post.user_id === user?.user_id)}
                             onClickLike={onClickLike}
                             onClickUnlike={onClickUnlike}
                         />
@@ -72,7 +72,7 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
                 }
 
                 {
-                    post.likes.length && post.image ?
+                    post?.likes?.length && post.image ?
                         <PublicationLikes post={post} />
                         : null
                 }
@@ -86,7 +86,7 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
             {
                 !post.image ?
                     <Like
-                        isActive={!!post.likes.find(post => post.user_id === user.user_id)} style={{ margin: "0px 5px" }}
+                        isActive={!!post?.likes?.find(post => post.user_id === user?.user_id)} style={{ margin: "0px 5px" }}
                         onClickLike={onClickLike}
                         onClickUnlike={onClickUnlike}
                     />
@@ -97,14 +97,14 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
 
 
             {
-                post.likes.length && !post.image ?
+                post?.likes?.length && !post.image ?
                     <PublicationLikes post={post} />
                     : null
             }
 
             {
                 delatable ?
-                    <Button variant="text" onClick={() => onDelete(post)} color="secondary" disabled={post.status === PostStatus.DELTED}>
+                    <Button variant="text" onClick={() => onDelete?.(post)} color="secondary" disabled={post.status === PostStatus.DELTED}>
                         Borrar
                     </Button>
                     :
@@ -115,7 +115,7 @@ export const Publication = ({ post, paperStyle, delatable, onDelete, publishable
 
             {
                 publishable ?
-                    <Button variant="text" onClick={() => onPublish(post)} disabled={post.status === PostStatus.PUBLISHED}>
+                    <Button variant="text" onClick={() => onPublish?.(post)} disabled={post.status === PostStatus.PUBLISHED}>
                         Publicar
                     </Button>
                     :

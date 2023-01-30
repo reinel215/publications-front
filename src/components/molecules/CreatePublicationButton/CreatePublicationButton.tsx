@@ -10,7 +10,7 @@ export const CreatePublicationButton = () => {
     const history = useHistory();
 
 
-    if (user.role === Roles.ADMIN) {
+    if (user?.role === Roles.ADMIN) {
         return null
     }
 

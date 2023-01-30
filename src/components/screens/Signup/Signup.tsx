@@ -9,7 +9,7 @@ import validationRegister from '../../../helper/validationRegister';
 export const Signup = () => {
 
     const [loading, setLoading] = useState<Boolean>(false);
-    const { handleSubmit, control, formState } = useForm();
+    const { handleSubmit, control, formState } = useForm<any>();
     const history = useHistory();
 
     const onSignup = async (user: SingupParams) => {
@@ -49,7 +49,7 @@ export const Signup = () => {
                             control={control}
                             rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.username}
-                            helperText={formState.errors?.username?.message.toString()}
+                            helperText={formState.errors?.username?.message?.toString()}
                         />
 
                         <Input
@@ -58,7 +58,7 @@ export const Signup = () => {
                             control={control}
                             rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.name}
-                            helperText={formState.errors?.name?.message.toString()}
+                            helperText={formState.errors?.name?.message?.toString()}
                         />
 
                         <Input
@@ -67,7 +67,7 @@ export const Signup = () => {
                             control={control}
                             rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                             error={!!formState.errors.surname}
-                            helperText={formState.errors?.surname?.message.toString()}
+                            helperText={formState.errors?.surname?.message?.toString()}
                         />
 
                         <Input
@@ -76,7 +76,7 @@ export const Signup = () => {
                             control={control}
                         />
 
-                        <Button variant="text" type="submit">
+                        <Button variant="text" type="submit" data-testid="signup-button">
                             {
                                 loading ?
                                     <CircularProgress />

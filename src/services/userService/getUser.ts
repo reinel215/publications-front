@@ -10,8 +10,7 @@ export interface GetUserParams {
 
 export const getUser = async ({ userId }: GetUserParams): Promise<User> => {
     try {
-        const response = (await axiosClient.get(`/users/${userId}`, {
-        })).data;
+        const response = (await axiosClient.get(`/users/${userId}`)).data;
 
         return response
     } catch (error) {

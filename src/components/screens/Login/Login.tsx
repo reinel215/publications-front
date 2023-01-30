@@ -8,9 +8,9 @@ import { Box, Button, CircularProgress, Link, Paper, Typography } from '@mui/mat
 import validationRegister from '../../../helper/validationRegister';
 
 
-export const Login = () => {
+export const Login = ({ testing }: { testing?: true }) => {
 
-    const { handleSubmit, control, formState } = useForm();
+    const { handleSubmit, control, formState } = useForm<any>();
     const history = useHistory();
     const [loading, setLoading] = useState<Boolean>(false);
 
@@ -51,20 +51,26 @@ export const Login = () => {
                                 label='Nombre de usuario'
                                 rules={{ ...validationRegister({ required: true, maxLength: 50 }) }}
                                 error={!!formState.errors.username}
-                                helperText={formState.errors?.username?.message.toString()}
+                                helperText={formState.errors?.username?.message?.toString()}
                             />
 
                             <Box sx={{ display: "flex", justifyContent: "end" }}>
-                                <RouterLink to="/signup" style={{ textDecoration: 'none' }}>
-                                    <Link sx={{ textDecoration: "none", fontWeight: "bold" }} component="div">
-                                        Registrarse
-                                    </Link>
-                                </RouterLink>
+                                {
+                                    testing ?
+                                        null
+                                        :
+                                        <RouterLink to="/signup" style={{ textDecoration: 'none' }}>
+                                            <Link sx={{ textDecoration: "none", fontWeight: "bold" }} component="div">
+                                                Registrarse
+                                            </Link>
+                                        </RouterLink>
+                                }
+
                             </Box>
                         </Box>
 
 
-                        <Button variant="text" type="submit">
+                        <Button variant="text" type="submit" data-testid="login-button">
                             {
                                 loading ?
                                     <CircularProgress />
