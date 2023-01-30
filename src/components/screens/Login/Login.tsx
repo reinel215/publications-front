@@ -5,12 +5,12 @@ import { login } from '../../../services/userService/login';
 import { Input } from '../../atoms/Input/Input';
 import { Link as RouterLink } from "react-router-dom";
 import { Box, Button, Link, Paper, Typography } from '@mui/material';
-import { isJSDocUnknownTag } from 'typescript';
+import validationRegister from '../../../helper/validationRegister';
 
 
 export const Login = () => {
 
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, formState } = useForm();
     const history = useHistory();
 
     const onLogin = async ({ username }: { username: string }) => {
@@ -35,15 +35,18 @@ export const Login = () => {
                 </Typography>
 
 
-                <form onSubmit={handleSubmit(onLogin)} style={{  }}>
+                <form onSubmit={handleSubmit(onLogin)} style={{}}>
 
-                    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column", justifyContent: "space-around"}}>
+                    <Box sx={{ display: "flex", gap: "10px", flexDirection: "column", justifyContent: "space-around" }}>
 
-                        <Box sx={{display: "flex", flexDirection: "column", gap: "5px"}}>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
                             <Input
                                 control={control}
                                 name="username"
                                 label='Nombre de usuario'
+                                rules={{ ...validationRegister({ required: true, maxLength: 50}) }}
+                                error={!!formState.errors.username}
+                                helperText={formState.errors?.username?.message.toString()}
                             />
 
                             <Box sx={{ display: "flex", justifyContent: "end" }}>

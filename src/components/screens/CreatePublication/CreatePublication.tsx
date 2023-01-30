@@ -2,6 +2,7 @@ import { Box, Button, Paper, Typography } from '@mui/material';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import validationRegister from '../../../helper/validationRegister';
 import { createPublication } from '../../../services/publicationService/creatPublication';
 import { CreatePostRequest, PostStatus } from '../../../types/Post';
 import { Input } from '../../atoms/Input/Input';
@@ -9,7 +10,7 @@ import { Input } from '../../atoms/Input/Input';
 export const CreatePublication = () => {
 
 
-    const { handleSubmit, control } = useForm();
+    const { handleSubmit, control, formState } = useForm();
     const history = useHistory();
 
     const onCreatePublication = async (data: Omit<CreatePostRequest, "status">) => {
@@ -42,6 +43,9 @@ export const CreatePublication = () => {
                             control={control}
                             name="image"
                             label='URL de la imagen'
+                            rules={{ ...validationRegister({ required: true}) }}
+                            error={!!formState.errors.image}
+                            helperText={formState.errors?.image?.message.toString()}
                         />
 
                         <Input
@@ -50,6 +54,9 @@ export const CreatePublication = () => {
                             label='Mensaje'
                             rows={4}
                             multiline
+                            rules={{ ...validationRegister({ required: true, maxLength: 500}) }}
+                            error={!!formState.errors.message}
+                            helperText={formState.errors?.message?.message.toString()}
                         />
 
 
@@ -57,6 +64,9 @@ export const CreatePublication = () => {
                             control={control}
                             name="location"
                             label='Lugar'
+                            rules={{ ...validationRegister({ required: true, maxLength: 20}) }}
+                            error={!!formState.errors.location}
+                            helperText={formState.errors?.location?.message.toString()}
                         />
 
 
