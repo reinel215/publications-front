@@ -7,7 +7,7 @@ export interface GetUserParams {
     userId: string;
 }
 
-
+//obtiene un usuario por su id
 export const getUser = async ({ userId }: GetUserParams): Promise<User> => {
     try {
         const response = (await axiosClient.get(`/users/${userId}`)).data;

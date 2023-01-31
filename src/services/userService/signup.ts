@@ -10,6 +10,7 @@ export interface SingupParams {
     avatar:string;
 }
 
+//realiza un post a la api para craer un nuevo usuario
 export const signup = async ({ username, surname, name, avatar }: SingupParams) => {
 
     try {

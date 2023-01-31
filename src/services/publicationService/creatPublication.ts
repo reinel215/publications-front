@@ -4,7 +4,7 @@ import { CreatePostRequest, Post, PostStatus } from "../../types/Post";
 const axiosClient = getAxiosClient();
 
 
-
+//create a new publication 
 export const createPublication = async (post: CreatePostRequest) => {
     try {
         const response = (await axiosClient.post("/publications/", {

@@ -8,6 +8,7 @@ interface LoginParams {
     username: string;
 }
 
+//realiza un inicio de sesion y luego guarda el usuario y el auth en la store de zustand
 export const login = async ({ username }: LoginParams) => {
 
     try {

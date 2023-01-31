@@ -3,9 +3,9 @@ import { User } from '../../types/User';
 
 
 interface UserDataStorageFilds {
-    isAuth: boolean;
+    isAuth: boolean; //auth te dira si puede entrar a las rutas privadas
     setIsAuth: (isAuth: boolean) => void;
-    user: User | null;
+    user: User | null; //guarda el usuario que inicia sesion
     setUser: (user: User) => void;
 }
 

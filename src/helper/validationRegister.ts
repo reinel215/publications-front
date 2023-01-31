@@ -6,6 +6,8 @@ interface ValidationRegisterParams {
     maxLength?: number,
 }
 
+//Esta funcion es una ayuda para la libreria de react-hook-form
+//nos ayuda a generalizar las validaciones de los inputs
 const validationRegister = ({ name = "", required = false, minLength = 0, maxLength = 0 }: ValidationRegisterParams) => {
 
 
